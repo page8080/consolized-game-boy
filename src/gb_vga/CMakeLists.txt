@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.12)
 
-# Pull in PICO SDK (must be before project).
-include(..\\..\\pico_sdk_import.cmake)
+# Pull in PICO SDK (change to the path of your pico sdk).
+include(/home/pi/pico/pico-sdk/external/pico_sdk_import.cmake)
 
-# We also need PICO EXTRAS.
-include(..\\..\\pico_extras_import.cmake)
+# We also need PICO EXTRAS (change to the path of your pico sdk).
+include(/home/pi/pico/pico-extras/external/pico_extras_import.cmake)
 
 project(pico_playground C CXX ASM)
 set(CMAKE_C_STANDARD 11)

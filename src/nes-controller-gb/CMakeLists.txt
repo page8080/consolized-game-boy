@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
-include(pico_sdk_import.cmake)
+# Pull in PICO SDK (change to the path of your pico sdk).
+include(/home/pi/pico/pico-sdk/external/pico_sdk_import.cmake)
 
 project(nes-controller-gb)
 

@@ -2,9 +2,9 @@
 #include "pico/binary_info.h"
 #include "pico/multicore.h"
 
-#define PULSE_PIN 2
-#define LATCH_PIN 3
-#define DATA_PIN 4
+#define PULSE_PIN 11
+#define LATCH_PIN 12
+#define DATA_PIN 13
 
 #define BUTTONS_LEFT_B_PIN 16
 #define BUTTONS_DPAD_PIN 17
@@ -75,6 +75,10 @@ void core1_func() {
 
 int main() {
     for (int i = 0; i < 8; i++) {
+        gpio_init(i);
+        gpio_set_dir(i, GPIO_OUT);
+        gpio_put(i, 0);
+
         button_states[i] = 1;
     }
 
@@ -106,6 +110,10 @@ int main() {
             sleep_us(25);
             gpio_put(PULSE_PIN, 0);
             sleep_us(25);
+        }
+
+        for (int i = 0; i < 8; i++) {
+            gpio_put(i, button_states[i] ? 0 : 1);
         }
 
         sleep_ms(20);
