@@ -74,14 +74,6 @@ void core1_func() {
 }
 
 int main() {
-    for (int i = 0; i < 8; i++) {
-        gpio_init(i);
-        gpio_set_dir(i, GPIO_OUT);
-        gpio_put(i, 0);
-
-        button_states[i] = 1;
-    }
-
     stdio_init_all();
     sem_init(&core1_initted, 0, 1);
     multicore_launch_core1(core1_func);
@@ -98,24 +90,37 @@ int main() {
     gpio_set_dir(DATA_PIN, GPIO_IN);
     gpio_pull_up(DATA_PIN);
 
+    for (int i = 0; i < 8; i++) {
+        gpio_init(i);
+        gpio_set_dir(i, GPIO_OUT);
+        gpio_put(i, 0);
+
+        button_states[i] = 1;
+    }
+
+    sleep_ms(16);
+
     while (1) {
         gpio_put(LATCH_PIN, 1);
-        sleep_us(25);
+        sleep_us(12);
         gpio_put(LATCH_PIN, 0);
-        sleep_us(25);
+        //sleep_us(25);
+        sleep_us(6);
 
         for (int i = 0; i < 8; i++) {
             button_states[i] = gpio_get(DATA_PIN);
             gpio_put(PULSE_PIN, 1);
-            sleep_us(25);
+            //sleep_us(25);
+            sleep_us(12);
             gpio_put(PULSE_PIN, 0);
-            sleep_us(25);
+            sleep_us(12);
         }
 
         for (int i = 0; i < 8; i++) {
             gpio_put(i, button_states[i] ? 0 : 1);
         }
 
-        sleep_ms(20);
+        //sleep_ms(20);
+        sleep_ms(16);
     }
 }
